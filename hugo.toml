@@ -56,7 +56,7 @@ buildDrafts = false
   description = "我的个人博客 - 记录学习与生活"
 
   # author: 作者名
-  author = "你的名字"
+  author = "bkyir"
 
   # defaultTheme: 主题默认外观。auto(跟随系统) / light(浅色) / dark(深色)
   defaultTheme = "auto"
@@ -85,7 +85,7 @@ buildDrafts = false
 
   # ---- 首页设置（PaperMod 的 profile 模式：居中头像 + 自我介绍）----
   [params.homeInfoParams]
-    Title = "你好，我是 你的名字 👋"
+    Title = "你好，我是 bkyir 👋"
     Content = """
     欢迎来到我的博客！
     这里记录我的学习笔记、项目作品和生活随想。
@@ -95,11 +95,11 @@ buildDrafts = false
   # 在 https://github.com/adityatelange/hugo-PaperMod/wiki/Icons 查看支持的图标名
   [[params.socialIcons]]
     name = "github"
-    url = "https://github.com/你的用户名"
+    url = "https://github.com/bkyir"
 
   [[params.socialIcons]]
     name = "email"
-    url = "mailto:you@example.com"
+    url = "mailto:r03z02@163.com"
 
 
   # ---- 文章封面图设置 ----

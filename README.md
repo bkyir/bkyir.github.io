@@ -24,17 +24,17 @@ title = "我的博客"              # 网站标题
 baseURL = "https://example.com/" # 改成你的正式域名
 
 [params]
-  author = "你的名字"
+  author = "bkyir"
   description = "我的个人博客"
 
   [params.homeInfoParams]
-    Title = "你好，我是 你的名字 👋"   # ← 改成你的名字
-    Content = "欢迎来到我的博客！..."   # ← 改成你的介绍
+    Title = "你好，我是 bkyir 👋"
+    Content = "欢迎来到我的博客！..."
 
   [[params.socialIcons]]
-    url = "https://github.com/你的用户名"  # ← 改成你的 GitHub
+    url = "https://github.com/bkyir"
   [[params.socialIcons]]
-    url = "mailto:you@example.com"        # ← 改成你的邮箱
+    url = "mailto:r03z02@163.com"
 ```
 
 ## 📁 目录结构

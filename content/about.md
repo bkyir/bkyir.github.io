@@ -9,7 +9,7 @@ summary = '关于我和这个博客'
 
 ## 关于我
 
-我是 **你的名字**，一名正在学习前端开发的开发者。
+我是 **bkyir**，一名正在学习前端开发的开发者。
 
 - 🎓 正在学习：HTML、CSS、JavaScript、Hugo
 - 💼 感兴趣的方向：Web 开发、用户体验设计
@@ -25,8 +25,8 @@ summary = '关于我和这个博客'
 
 ## 联系我
 
-- 📧 邮箱：you@example.com
-- 💻 GitHub：[@你的用户名](https://github.com/你的用户名)
+- 📧 邮箱：r03z02@163.com
+- 💻 GitHub：[@bkyir](https://github.com/bkyir)
 
 ---
 
