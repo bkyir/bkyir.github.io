@@ -1,0 +1,19 @@
+# Hugo 生成的网站文件（每次构建会重新生成，不需要提交到 git）
+/public/
+/resources/_gen/
+
+# Hugo 临时文件
+.hugo_build.lock
+
+# 操作系统生成的杂项文件
+.DS_Store        # macOS 的文件夹属性文件
+Thumbs.db        # Windows 的缩略图缓存
+
+# 编辑器生成的文件
+.vscode/         # VS Code 配置（如果你想分享配置，可以删掉这行）
+.idea/           # JetBrains 系列 IDE 配置
+*.swp            # vim 临时文件
+*.swo
+
+# 日志文件
+*.log

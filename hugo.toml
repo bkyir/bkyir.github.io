@@ -1,0 +1,178 @@
+# ============================================================
+# Hugo 站点配置文件 (hugo.toml)
+# ============================================================
+# 这个文件控制「整个网站」的设置：站点名、作者、主题、菜单等。
+# TOML 格式用 [中括号] 分区块，# 开头的是注释。
+# ============================================================
+
+
+# ===== 基础设置 =====
+# baseURL: 网站最终上线后的地址。
+#
+# 【GitHub Pages 场景】根据你创建的仓库名，二选一：
+#
+#   情况 A：仓库叫「用户名.github.io」（用户名换成你的，比如 zhangsan.github.io）
+#           → 用：baseURL = "https://用户名.github.io/"
+#           （这种仓库的页面直接访问 https://用户名.github.io）
+#
+#   情况 B：仓库叫其他名字（比如 my-blog）
+#           → 用：baseURL = "https://用户名.github.io/my-blog/"
+#           （注意结尾的 /my-blog/ 不能少，否则样式会错位）
+#
+# 本地预览（hugo server）时，这个值不影响显示。
+baseURL = "https://bkyir.github.io/"
+
+# locale: 网站语言代码，zh-CN 表示简体中文
+locale = "zh-CN"
+
+# title: 网站标题。会显示在浏览器标签页和站点首页
+title = "我的博客"
+
+# theme: 使用的主题名，对应 themes/ 文件夹下的目录名
+theme = "PaperMod"
+
+# enableEmoji: 允许在内容里使用 emoji（如 😊 🚀）
+enableEmoji = true
+
+# enableRobotsTXT: 自动生成 robots.txt（给搜索引擎看的文件）
+enableRobotsTXT = true
+
+# buildDrafts: 是否构建标记为「草稿」的文章。
+#              false 表示草稿不显示。发布文章时把 draft 改成 false 即可。
+buildDrafts = false
+
+# pagination: 每页显示多少篇文章
+[pagination]
+  pageSize = 10
+
+
+# ===== PaperMod 主题参数 =====
+# [params] 区块里的设置是给主题用的。
+# 不同主题有不同的参数，PaperMod 的常用配置如下。
+[params]
+
+  # ---- 基本信息 ----
+  # description: 网站描述，显示在浏览器标签和搜索引擎结果里
+  description = "我的个人博客 - 记录学习与生活"
+
+  # author: 作者名
+  author = "你的名字"
+
+  # defaultTheme: 主题默认外观。auto(跟随系统) / light(浅色) / dark(深色)
+  defaultTheme = "auto"
+
+  # 显示「切换主题（明/暗）」按钮
+  showThemeToggle = true
+
+  # 显示「分享文章」按钮
+  showShareButtons = true
+
+  # 在文章页显示「阅读时间」估算
+  showReadingTime = true
+
+  # 在文章页显示「字数统计」
+  showWordCount = true
+
+  # 在文章页底部显示「返回顶部」按钮
+  showBackToTop = true
+
+  # 在文章页显示「编辑此页」链接（不需要的话设为 false 或留空）
+  showPostNavLinks = true
+
+  # 首页文章显示「代码复制按钮」
+  showCodeCopyButtons = true
+
+
+  # ---- 首页设置（PaperMod 的 profile 模式：居中头像 + 自我介绍）----
+  [params.homeInfoParams]
+    Title = "你好，我是 你的名字 👋"
+    Content = """
+    欢迎来到我的博客！
+    这里记录我的学习笔记、项目作品和生活随想。
+    """
+
+  # ---- 社交链接图标（会显示在首页头像下方）----
+  # 在 https://github.com/adityatelange/hugo-PaperMod/wiki/Icons 查看支持的图标名
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/你的用户名"
+
+  [[params.socialIcons]]
+    name = "email"
+    url = "mailto:you@example.com"
+
+
+  # ---- 文章封面图设置 ----
+  [params.cover]
+    # 是否在首页列表显示文章封面图
+    hidden = false
+    hiddenInList = false
+    hiddenInSingle = false
+
+
+# ===== 搜索功能（PaperMod 内置）=====
+[outputs]
+  home = ["HTML", "RSS", "JSON"]  # JSON 用于站内搜索
+
+
+# ===== 顶部菜单栏 =====
+# 每一项 [[menu.main]] 是一个菜单项
+# identifier: 唯一标识（一般和 url 对应）
+# name: 菜单显示的文字
+# url: 链接地址（/ 开头表示站内路径）
+# weight: 排序权重，数字越小越靠左
+[[menu.main]]
+  identifier = "home"
+  name = "首页"
+  url = "/"
+  weight = 1
+
+[[menu.main]]
+  identifier = "search"
+  name = "搜索"
+  url = "/search/"
+  weight = 2
+
+[[menu.main]]
+  identifier = "tags"
+  name = "标签"
+  url = "/tags/"
+  weight = 3
+
+[[menu.main]]
+  identifier = "archives"
+  name = "归档"
+  url = "/archives/"
+  weight = 4
+
+[[menu.main]]
+  identifier = "about"
+  name = "关于"
+  url = "/about/"
+  weight = 5
+
+
+# ===== Markdown 渲染设置 =====
+# 让 Markdown 里的标题自动带链接、表格能用等
+[markup]
+  [markup.highlight]
+    # 代码块是否显示行号
+    lineNos = true
+    # 代码高亮主题风格
+    style = "monokai"
+    # 是否可以一键复制代码
+    codeFences = true
+    # 高亮代码自己处理 CSS（用主题的样式），不用 Hugo 默认
+    noClasses = false
+
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      # 允许在 Markdown 里直接写 HTML 标签（更灵活）
+      unsafe = true
+
+
+# ===== SEO：让搜索引擎更容易收录 =====
+[taxonomies]
+  # 标签和分类系统。Hugo 默认就是这两个，显式写出来更清晰
+  tag = "tags"
+  category = "categories"

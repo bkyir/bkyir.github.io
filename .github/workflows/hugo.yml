@@ -1,0 +1,88 @@
+# ============================================================
+# GitHub Actions: 自动构建并部署 Hugo 博客到 GitHub Pages
+# ============================================================
+# 这个文件的作用：
+#   每次你把代码 push 到 GitHub，云端会自动：
+#   1. 拉取你的代码
+#   2. 用 Hugo 构建静态网站
+#   3. 发布到 GitHub Pages
+#   你只需要 git push，剩下全自动！
+#
+# 配置说明：https://gohugo.io/hosting-and-deployment/hosting-on-github/
+# ============================================================
+
+# 工作流名称（在 GitHub 的 Actions 标签页里显示的名字）
+name: Deploy Hugo to GitHub Pages
+
+# ===== 什么时候触发这个工作流？=====
+on:
+  # 1. 当你 push 代码到 main 分支时自动触发
+  push:
+    branches: ["main"]
+  # 2. 允许在 GitHub 网页上手动点击运行（Actions 标签页 → Run workflow）
+  workflow_dispatch:
+
+# ===== 权限设置 =====
+# GITHUB_TOKEN 是 GitHub 自动提供的密钥，用于部署到 Pages
+permissions:
+  contents: read      # 读取仓库内容的权限
+  pages: write        # 写入 GitHub Pages 的权限
+  id-token: write     # 允许生成部署用的令牌
+
+# ===== 并发控制 =====
+# 同一时间只允许一个部署任务运行，新的会取消旧的（避免重复部署）
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+# ===== 任务步骤 =====
+jobs:
+  build:
+    runs-on: ubuntu-latest   # 在 Ubuntu 系统上运行
+    env:
+      HUGO_VERSION: 0.163.3   # Hugo 版本，和本地保持一致
+    steps:
+      # 步骤 1：检出代码（把仓库代码下载到云端机器）
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true    # 重要！同时拉取主题 submodule
+          fetch-depth: 0      # 拉取完整 git 历史（Hugo 需要用来生成最后更新时间）
+
+      # 步骤 2：安装 Hugo
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: ${{ env.HUGO_VERSION }}
+          extended: true      # 使用扩展版（支持 SCSS，部分主题需要）
+
+      # 步骤 3：配置 GitHub Pages
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      # 步骤 4：用 Hugo 构建网站
+      - name: Build with Hugo
+        env:
+          # 把 Pages 的基础地址传给 Hugo，确保生成的链接正确
+          HUGO_BASEURL: "${{ steps.pages.outputs.base_url }}/"
+        run: hugo --minify    # --minify 压缩 HTML/CSS，让网站加载更快
+
+      # 步骤 5：把构建产物打包（上传为 artifact）
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public      # Hugo 构建结果所在的文件夹
+
+  # ===== 部署任务（依赖 build 任务完成后才执行）=====
+  deploy:
+    environment:
+      name: github-pages      # 部署环境名称
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build              # 等 build 任务完成
+    steps:
+      # 步骤 1：下载刚才打包的构建产物
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
