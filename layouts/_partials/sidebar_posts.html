@@ -1,0 +1,20 @@
+{{- /* 文章详情页右侧导航：列出所有已发布文章，当前文章高亮 */ -}}
+{{- $posts := where site.RegularPages "Type" "in" (site.Params.mainSections | default (slice "posts")) -}}
+{{- $posts = where $posts "Params.draft" "!=" true -}}
+{{- $posts = sort $posts "Date" "desc" -}}
+
+<nav class="sidebar-nav">
+  <h3>文章列表</h3>
+  <ul>
+    {{- range $posts }}
+    <li>
+      <a href="{{ .RelPermalink }}"{{- if eq .RelPermalink $.RelPermalink }} class="active" aria-current="page"{{- end }} title="{{ .Title }}">
+        {{- .Title -}}
+      </a>
+    </li>
+    {{- end }}
+  </ul>
+</nav>
+
+
+

@@ -1,0 +1,94 @@
+/*
+ * 文章详情页侧边栏样式
+ * - 窄屏（<1280px）：完全隐藏侧边栏，回到原始单栏布局
+ * - 宽屏（≥1280px）：双栏布局，侧边栏 sticky 固定
+ * 所有颜色使用主题 CSS 变量，自动适配明暗主题
+ */
+
+/* 默认（窄屏）：隐藏侧边栏，post-layout 退化为普通块容器 */
+.post-layout {
+    display: block;
+}
+
+.post-sidebar {
+    display: none;
+}
+
+/*
+ * 宽屏（≥1280px）布局：文章相对屏幕居中（保持 PaperMod 原版），侧边栏固定在右侧。
+ * 关键：.main 的 margin:auto + max-width 已让正文居中，我们不动它。
+ * .post-layout 作为块容器跟正文同宽居中；侧边栏用 position: fixed 固定到
+ * 「正文右边缘 + gap」的位置。fixed 相对 viewport，永远吸顶、永远在右侧。
+ *
+ * 位置计算：正文居中时，正文右边缘到屏幕左边的距离 = 50% + main-width/2。
+ * 侧栏 left 就设为这个值 + gap。
+ */
+@media (min-width: 1280px) {
+    .post-sidebar {
+        display: block;
+        position: fixed;
+        top: calc(var(--header-height) + var(--gap));
+        left: calc(50% + var(--main-width) / 2 + var(--gap));
+        width: 240px;
+        max-height: calc(100vh - var(--header-height) - var(--gap) * 2);
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: var(--tertiary) transparent;
+    }
+
+    .post-sidebar::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .post-sidebar::-webkit-scrollbar-thumb {
+        background: var(--tertiary);
+        border-radius: 3px;
+    }
+}
+
+/* 侧边栏内容样式 */
+.sidebar-nav h3 {
+    font-size: 14px;
+    color: var(--secondary);
+    margin: 0 0 12px;
+    padding: 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-nav li {
+    margin: 0;
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 7px 10px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--secondary);
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    /* 长标题优雅截断 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sidebar-nav a:hover {
+    background: var(--code-bg);
+    color: var(--primary);
+}
+
+.sidebar-nav a.active {
+    background: var(--code-bg);
+    color: var(--primary);
+    font-weight: 600;
+}
