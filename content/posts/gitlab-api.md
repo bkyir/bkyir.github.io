@@ -1,5 +1,5 @@
 +++
-date = 2026-06-22T10:35:00+08:00
+date = 2026-06-22T09:35:00+08:00
 draft = false
 title = 'GitLab API 常用接口'
 tags = ['GitLab', 'API', 'DevOps']
