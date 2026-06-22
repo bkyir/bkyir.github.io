@@ -1,10 +1,17 @@
-# Git 常用操作速查
++++
+date = 2026-06-22T10:30:00+08:00
+draft = false
+title = 'Git 常用操作速查'
+tags = ['Git', '工具', '效率']
+categories = ['工具']
+summary = '整理日常工作中常用的 Git 操作：Patch 补丁、Tag 标签、Worktree 工作区。'
++++
 
 整理日常工作中常用的 Git 操作，方便查阅。
 
 涵盖三类：**Patch 补丁**、**Tag 标签**、**Worktree 工作区**。
 
-> GitLab API 相关内容已拆分到 [GITLAB.md](./GITLAB.md)。
+> GitLab API 相关内容见 [GitLab API 常用接口]({{< relref "gitlab-api.md" >}})。
 
 ---
 

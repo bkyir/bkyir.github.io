@@ -1,4 +1,11 @@
-# GitLab API 常用接口
++++
+date = 2026-06-22T10:35:00+08:00
+draft = false
+title = 'GitLab API 常用接口'
+tags = ['GitLab', 'API', 'DevOps']
+categories = ['工具']
+summary = '整理 GitLab API 的常用操作：上传安装包到 Package Registry、查询 Package、创建 Release。'
++++
 
 整理 GitLab API 的常用操作：**上传安装包**、**查询 Package**、**创建 Release**。
 
@@ -59,7 +66,7 @@ curl --request POST \
 
 ---
 
-## 📌 参考
+## 参考
 
 - GitLab API 更多接口参考官方文档：https://docs.gitlab.com/ee/api/
 - Generic Package Registry：https://docs.gitlab.com/ee/user/packages/generic_packages/
