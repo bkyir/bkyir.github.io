@@ -64,8 +64,8 @@ buildDrafts = false
   # 显示「切换主题（明/暗）」按钮
   showThemeToggle = true
 
-  # 显示「分享文章」按钮
-  showShareButtons = true
+  # 显示「分享文章」按钮（X/LinkedIn/Reddit 等社交平台跳转）
+  showShareButtons = false
 
   # 在文章页显示「阅读时间」估算
   showReadingTime = true
