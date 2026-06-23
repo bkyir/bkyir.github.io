@@ -1,0 +1,13 @@
+/*
+ * 修正：列表（ul/ol）内的代码块缩进
+ *
+ * 背景：PaperMod 主题在 md-content.css 中对 `.md-content ul pre` 设置了
+ *       margin-inline-start: calc(var(--gap) * -2)（负边距），
+ *       会把列表项里的代码块强行往左拉到与正文对齐，导致视觉上脱离列表层级。
+ *       这里覆盖为 0，让代码块跟随列表项正常缩进。
+ */
+
+.md-content ul pre,
+.md-content ol pre {
+    margin-inline-start: 0;
+}
