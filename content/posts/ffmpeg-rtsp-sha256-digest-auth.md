@@ -34,13 +34,16 @@ HA2 = H(method : uri)
 **第三步：计算 response（最终响应）**
 
 - 无 qop 时：
-  ```
-  response = H(HA1 : nonce : HA2)
-  ```
+
+    ```
+    response = H(HA1 : nonce : HA2)
+    ```
+
 - 有 qop（如 `auth`）时：
-  ```
-  response = H(HA1 : nonce : nc : cnonce : qop : HA2)
-  ```
+
+    ```
+    response = H(HA1 : nonce : nc : cnonce : qop : HA2)
+    ```
 
 其中 `nonce` 为服务端随机数，`nc` 为请求计数，`cnonce` 为客户端随机数。
 
