@@ -1,7 +1,8 @@
 /*
  * 文章详情页侧边栏样式
  * - 窄屏（<1280px）：完全隐藏侧边栏，回到原始单栏布局
- * - 宽屏（≥1280px）：双栏布局，侧边栏 sticky 固定
+ * - 宽屏（≥1280px）：双栏布局，侧边栏 fixed 固定
+ * 侧栏内部纵向分两块：上半「文章列表」限高滚动，下半「当前文章大纲」点击跳转。
  * 所有颜色使用主题 CSS 变量，自动适配明暗主题
  */
 
@@ -25,29 +26,59 @@
  */
 @media (min-width: 1280px) {
     .post-sidebar {
-        display: block;
+        display: flex;
+        flex-direction: column;
         position: fixed;
         top: calc(var(--header-height) + var(--gap));
         left: calc(50% + var(--main-width) / 2 + var(--gap));
         width: 240px;
         max-height: calc(100vh - var(--header-height) - var(--gap) * 2);
+        overflow: hidden; /* 容器不滚动，由内部两个区块各自滚动 */
+    }
+
+    /* 文章列表：限高（约占侧栏一半，刚好约 10 条），超出独立滚动 */
+    .sidebar-articles {
+        flex: 0 1 auto;
+        min-height: 0;
+        max-height: 50%;
         overflow-y: auto;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    /* 当前文章大纲：占剩余空间，超出独立滚动 */
+    .sidebar-toc {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        padding-top: 4px;
+    }
+
+    .sidebar-articles::-webkit-scrollbar,
+    .sidebar-toc::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .sidebar-articles::-webkit-scrollbar-thumb,
+    .sidebar-toc::-webkit-scrollbar-thumb {
+        background: var(--tertiary);
+        border-radius: 3px;
+    }
+
+    .sidebar-articles {
         scrollbar-width: thin;
         scrollbar-color: var(--tertiary) transparent;
     }
 
-    .post-sidebar::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    .post-sidebar::-webkit-scrollbar-thumb {
-        background: var(--tertiary);
-        border-radius: 3px;
+    .sidebar-toc {
+        scrollbar-width: thin;
+        scrollbar-color: var(--tertiary) transparent;
     }
 }
 
-/* 侧边栏内容样式 */
-.sidebar-nav h3 {
+/* 通用区块标题（文章列表 / 大纲 共用） */
+.sidebar-nav h3,
+.toc-nav h3 {
     font-size: 14px;
     color: var(--secondary);
     margin: 0 0 12px;
@@ -57,6 +88,12 @@
     font-weight: 600;
 }
 
+/* 大纲区块顶部留白（与上方文章列表分隔线对齐） */
+.sidebar-toc .toc-nav h3 {
+    margin-top: 8px;
+}
+
+/* 文章列表 */
 .sidebar-nav ul {
     list-style: none;
     padding: 0;
@@ -91,4 +128,56 @@
     background: var(--code-bg);
     color: var(--primary);
     font-weight: 600;
+}
+
+/* 大纲（Hugo .TableOfContents 生成 #TableOfContents > ul） */
+.toc-nav nav#TableOfContents {
+    padding: 0 10px;
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-nav li ul {
+    /* 子标题缩进 */
+    padding-left: 14px;
+}
+
+.toc-nav li {
+    margin: 0;
+}
+
+.toc-nav a {
+    display: block;
+    padding: 5px 8px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--secondary);
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.toc-nav a:hover {
+    background: var(--code-bg);
+    color: var(--primary);
+}
+
+/*
+ * 锚点跳转补偿：点击大纲跳转到正文标题时，避免被吸顶的 header 遮挡。
+ * --header-height 由 PaperMod 主题定义。
+ */
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+    scroll-margin-top: calc(var(--header-height) + var(--gap));
 }

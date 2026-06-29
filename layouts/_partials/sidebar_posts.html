@@ -1,20 +1,29 @@
-{{- /* 文章详情页右侧导航：列出所有已发布文章，当前文章高亮 */ -}}
+{{- /* 文章详情页右侧导航：上半文章列表（限高滚动），下半当前文章大纲（点击跳转） */ -}}
 {{- $posts := where site.RegularPages "Type" "in" (site.Params.mainSections | default (slice "posts")) -}}
 {{- $posts = where $posts "Params.draft" "!=" true -}}
 {{- $posts = sort $posts "Date" "desc" -}}
 
-<nav class="sidebar-nav">
-  <h3>文章列表</h3>
-  <ul>
-    {{- range $posts }}
-    <li>
-      <a href="{{ .RelPermalink }}"{{- if eq .RelPermalink $.RelPermalink }} class="active" aria-current="page"{{- end }} title="{{ .Title }}">
-        {{- .Title -}}
-      </a>
-    </li>
-    {{- end }}
-  </ul>
-</nav>
+<div class="sidebar-articles">
+  <nav class="sidebar-nav">
+    <h3>文章列表</h3>
+    <ul>
+      {{- range $posts }}
+      <li>
+        <a href="{{ .RelPermalink }}"{{- if eq .RelPermalink $.RelPermalink }} class="active" aria-current="page"{{- end }} title="{{ .Title }}">
+          {{- .Title -}}
+        </a>
+      </li>
+      {{- end }}
+    </ul>
+  </nav>
+</div>
 
-
-
+{{- /* 当前文章大纲：无标题的文章不渲染该区块 */ -}}
+{{- with .TableOfContents }}
+<div class="sidebar-toc">
+  <nav class="toc-nav">
+    <h3>大纲</h3>
+    {{- . }}
+  </nav>
+</div>
+{{- end }}
