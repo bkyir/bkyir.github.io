@@ -41,6 +41,12 @@ enableRobotsTXT = true
 #              false 表示草稿不显示。发布文章时把 draft 改成 false 即可。
 buildDrafts = false
 
+# buildFuture: 是否构建「日期在未来」的文章。
+#              GitHub Actions 在 UTC 时区构建，而文章日期用北京时间（+08:00），
+#              当天写的文章会被 CI 当成「未来文章」而不显示。
+#              设为 true 可避免这个时区坑，让当天发布的文章正常显示。
+buildFuture = true
+
 # pagination: 每页显示多少篇文章
 [pagination]
   pageSize = 10
