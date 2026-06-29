@@ -1,3 +1,12 @@
++++
+date = 2026-06-29T10:00:00+08:00
+draft = false
+title = 'Windows certutil 工具常用命令'
+tags = ['Windows', 'certutil', '命令行']
+categories = ['Windows']
+summary = '整理 Windows 自带的 CertUtil 工具常用命令：查看文件十六进制、计算文件哈希、Base64 编码与解码。'
++++
+
 # windows 相关
 
 ## certutil
