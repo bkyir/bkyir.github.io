@@ -19,7 +19,18 @@ summary = '整理日常工作中常用的 Git 操作：Patch 补丁、Tag 标签
 
 用于把改动导出成 `.patch` 文件，再应用到另一个仓库或分支（比如把修复合并到 Release 分支）。
 
-### 1.1 生成 patch
+Git 提供两套补丁机制，按改动来源选择：
+
+| 方式 | 格式 | 是否含提交信息 | 应用结果 |
+|------|------|------|------|
+| `git diff` + `git apply` | 纯差异 | 否 | 只改工作区，不产生提交 |
+| `git format-patch` + `git am` | 邮箱（mailbox） | 是（保留作者/说明） | 直接生成新提交 |
+
+### 1.1 基于工作区改动：git diff + git apply
+
+改动**尚未提交**（还在工作区 / 暂存区）时用这套，导出纯差异补丁。
+
+**生成 patch**
 
 ```bash
 # 把已跟踪文件的改动导出成 patch
@@ -27,7 +38,7 @@ summary = '整理日常工作中常用的 Git 操作：Patch 补丁、Tag 标签
 git diff --output=my.patch
 ```
 
-### 1.2 包含未跟踪文件
+**包含未跟踪文件**
 
 `git diff` 默认不包含未跟踪（untracked）的文件。需要先 `git add` 进暂存区，再用 `--cached` 导出：
 
@@ -38,7 +49,7 @@ git diff --cached --binary --output=my.patch
 
 > `--binary`：如果改动里有二进制文件（图片、so 库等），必须加这个参数，否则二进制内容会丢失。
 
-### 1.3 应用 patch
+**应用 patch**
 
 ```bash
 # 自动修复空格问题（行尾多余空格、Tab/空格混用等）
@@ -56,6 +67,40 @@ git apply --whitespace=fix my.patch
 ```bash
 # 推荐流程：先 check 再 apply
 git apply --check my.patch && git apply my.patch
+```
+
+### 1.2 基于已提交 commit：git format-patch + git am
+
+改动**已经提交**时用这套。`git format-patch` 基于 commit 生成邮箱（mailbox）格式补丁，包含作者、提交信息等元数据；配套用 `git am` 应用，会保留这些信息并直接生成新提交。
+
+**生成补丁**
+
+```bash
+# 导出最近 1 个 commit（自动命名 0001-提交标题.patch）
+git format-patch -1 HEAD
+
+# 导出区间 [base, head) 内的提交（不含 base）
+git format-patch <base-commit>..<head-commit>
+
+# 导出 base 之后的所有提交（等价于 base..HEAD）
+git format-patch <base-commit>
+
+# 指定输出目录，避免 .patch 散落在仓库里
+git format-patch -o patches <base-commit>..<head-commit>
+```
+
+**应用补丁**
+
+```bash
+# 应用 patch（支持多个文件 / 通配符）
+git am patches/0001-*.patch
+
+# 冲突时：手动解决后继续
+git add .
+git am --continue
+
+# 完全放弃本次应用，回到应用前状态
+git am --abort
 ```
 
 ---
